@@ -210,7 +210,7 @@ input {
 }
 .formData[data-error]::after {
   content: attr(data-error);
-  font-size: 0.4em;
+  font-size: 14px;
   color: #e54858;
   display: block;
   margin-top: 7px;
@@ -527,3 +527,15 @@ footer {
   }
 }
 
+.radio-error {
+  border: 2px solid red;
+  padding: 10px;
+  border-radius: 10px;
+}
+
+#location-error {
+  color: red;
+  font-size: 14px;
+  margin-top: 5px;
+  display: block;
+}

@@ -34,6 +34,9 @@ const firstNameInput = document.getElementById("first");
 const lastNameInput = document.getElementById("last");
 const emailInput = document.getElementById("email");
 const birthdateInput = document.getElementById("birthdate");
+const quantityInput = document.getElementById("quantity");
+const locationRadios = document.querySelectorAll('input[name="location"]');
+const conditionsInput = document.getElementById("checkbox1");
 
 //first name validation
 function validationFirstName () {
@@ -173,27 +176,133 @@ function validationBirthdate () {
   }
 }
 
+//quantity of match validation
+function validationQuantity () {
+  const quantity = quantityInput.value;  
+  let quantityRegExp = new RegExp("^[0-9]+$");
+
+  if (!quantityRegExp. test(quantity)) {
+    quantityInput.style.borderColor = "red"; 
+
+    let quantityErrorMessage = document.getElementById("quantity-error");
+
+    if (!quantityErrorMessage) {
+      quantityErrorMessage = document.createElement("span");
+      quantityErrorMessage.id = "quantity-error";
+      quantityErrorMessage.style.color = "red";
+
+      quantityInput.parentNode.insertBefore(
+        quantityErrorMessage,
+      quantityInput.nextSibling
+      );
+    }
+
+    quantityErrorMessage.textContent = "Vous devez indiquer le nombre de tournois.";
+
+    return false;
+  } else {
+    quantityInput.style.borderColor = "";
+
+    const quantityErrorMessage = document.getElementById("quantity-error");
+    if (quantityErrorMessage) {
+      quantityErrorMessage.textContent = "";
+    }
+    return true;
+  }
+}
+
+//location validation
+function validationLocation() {
+  let selectedLocation = false;
+  const radioContainer = document.querySelector(".formData.radioContainer");
+  let locationErrorMessage = document.getElementById("location-error");
+
+  locationRadios.forEach(radio => {
+    if (radio.checked) {
+      selectedLocation = true;
+    }
+  });
+
+  if (!selectedLocation) {
+    radioContainer.classList.add("radio-error");
+    
+    if (!locationErrorMessage) {
+      locationErrorMessage = document.createElement("span");
+      locationErrorMessage.id = "location-error";
+      radioContainer.appendChild(locationErrorMessage);
+    }
+
+    locationErrorMessage.textContent = "Veuillez choisir une option.";
+    return false;
+  } else {
+    radioContainer.classList.remove('radio-error');
+    if (locationErrorMessage) {
+      locationErrorMessage.remove();
+    }
+    return true;
+  }
+}
+
+  // verification of every locations for the validation
+  locationRadios.forEach(radio => {
+    radio.addEventListener("change", validationLocation);
+  });
+
+//obligatory conditions validation
+  function validationConditions () {
+  let conditionsErrorMessage = document.getElementById("conditions-error");
+  const conditionsContainer = conditionsInput.parentElement;
+  
+    if (!conditionsInput.checked) {
+      conditionsContainer.classList.add("error");
+
+      if (!conditionsErrorMessage) {
+        conditionsErrorMessage = document.createElement("span");
+        conditionsErrorMessage.id = "conditions-error";
+        conditionsErrorMessage.style.color = "red";
+        conditionsErrorMessage.style.display = "block";
+        conditionsErrorMessage.style.marginTop = "5px";
+
+        conditionsErrorMessage.textContent = "Vous devez vérifier que vous acceptez les termes et conditions.";
+
+        const label = conditionsContainer.querySelector('label');
+        label.after(conditionsErrorMessage);
+      }  
+      return false;
+    } else {
+    conditionsContainer.classList.remove("error");
+    conditionsErrorMessage?.remove();
+    }
+    return true;
+  }
+
 //Event listener for the submit check
 firstNameInput.addEventListener("blur", validationFirstName);
 lastNameInput.addEventListener("blur", validationLastName);
 emailInput.addEventListener("blur", validationEmail);
 birthdateInput.addEventListener("blur", validationBirthdate);
+quantityInput.addEventListener("blur", validationQuantity);
+conditionsInput.addEventListener("change", validationConditions);
 
-//list of const for the validation check before submit
-const validationSubmit = [
-  validationFirstName,
-  validationLastName,
-  validationEmail, 
-  validationBirthdate,
-
-]
-//validation check before submit
+//list of const for the validation check
 document.querySelector("form").addEventListener("submit", function (event) {
-  const validationResult = validationSubmit.map(validateFinal => validateFinal());
+event.preventDefault();
 
-  const invalidField = validationResult.includes(false);
-  if (invalidField) {
-    event.preventDefault();
+  const validationChecks = [
+    validationFirstName(),
+    validationLastName(),
+    validationEmail(),
+    validationBirthdate(),
+    validationQuantity(),
+    validationLocation(),
+    validationConditions()
+  ];
+
+//validation for every check confirmed, submition allowed
+const valid = validationChecks.every(check => check === true);
+
+   if (valid) {
+    this.submit();
   }
 });
 
