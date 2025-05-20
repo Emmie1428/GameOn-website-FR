@@ -302,7 +302,14 @@ event.preventDefault();
 const valid = validationChecks.every(check => check === true);
 
    if (valid) {
-    this.submit();
+    const form = this;
+    form.innerHTML = "";
+
+    //confirmation message
+    const confirmationMessage = document.createElement("div");
+    confirmationMessage.className = "confirmation-message";
+    confirmationMessage.innerHTML = `<p>Merci ! Votre réservation a été reçue.</p>`;
+    form.appendChild(confirmationMessage);
   }
 });
 
