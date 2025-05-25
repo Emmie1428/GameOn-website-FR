@@ -11,7 +11,6 @@
 /* Landing Page */
 
 body {
-  margin: 0;
   display: flex;
   flex-direction: column;
   background-image: url("background.png");
@@ -32,7 +31,7 @@ img {
 
 .topnav {
   overflow: hidden;
-  margin: 3.5%;
+  margin: 52px 0px 84px 53px;
 }
 .header-logo {
     float: left;
@@ -48,8 +47,8 @@ img {
   padding: 12px 12px;
   margin: 5px;
   text-decoration: none;
-  font-size: 20px;
-  font-family: Roboto, sans-serif;
+  font-size: 18px;
+  font-family: var(--font-slab);
 }
 
 .topnav a:hover {
@@ -105,14 +104,11 @@ main {
   font-size: 130%;
   font-weight: bolder;
   color: black;
-  padding-top: 0.5vw;
   padding-left: 2vw;
   padding-right: 2vw;
   margin: 1px 20px 15px;
   border-radius: 2rem;
   text-align: justify;
-
-
 }
 
 .modal-btn {
@@ -173,6 +169,7 @@ main {
   margin: 5% auto;
   width: 100%;
   max-width: 500px;
+  min-height: 750px;
   animation-name: modalopen;
   animation-duration: var(--modal-duration);
   background: #232323;
@@ -190,7 +187,7 @@ main {
 
 label {
   font-family: var(--font-default);
-  font-size: 17px;
+  font-size: 14px;
   font-weight: normal;
   display: inline-block;
   margin-bottom: 11px;
@@ -211,7 +208,7 @@ input {
 .formData[data-error]::after {
   content: attr(data-error);
   font-size: 0.4em;
-  color: #e54858;
+  color: #FF4E60;
   display: block;
   margin-top: 7px;
   margin-bottom: 7px;
@@ -224,8 +221,9 @@ input {
   opacity: 1;
 }
 .formData[data-error-visible="true"] .text-control {
-  border: 2px solid #e54858;
+  border: 2px solid #FF4E60;
 }
+
 /* 
 input[data-error]::after {
     content: attr(data-error);
@@ -322,21 +320,38 @@ input[data-error]::after {
   transform: rotate(-45deg);
 }
 .btn-submit,
-.btn-signup {
-  background: #fe142f;
+.btn-signup,
+.close-reset-btn {
+  background: #FE142F;
   display: block;
   margin: 0 auto;
   border-radius: 7px;
-  font-size: 1rem;
-  padding: 12px 82px;
+  font-size: 14px;
+  padding: 12px 68px;
   color: #fff;
   cursor: pointer;
   border: 0;
 }
+
+.confirmation-message {
+  display: flex;
+  flex-direction: column;
+  height: 700px;
+  justify-content: flex-end;
+}
+
+.confirmation-message p {
+  font-family: 'DM Sans';
+  font-weight: 400;
+  margin-bottom: 270px;
+  font-size: 36px;
+  text-align: center;
+}
+
 /* custom select styles */
 .custom-select {
   position: relative;
-  font-family: Arial;
+  font-family: var(--font-slab);
   font-size: 1.1rem;
   font-weight: normal;
 }
@@ -405,22 +420,22 @@ input[data-error]::after {
   font-size: 16px;
 }
 .hero-section {
-  min-height: 93vh;
   border-radius: 10px;
   display: grid;
   grid-template-columns: repeat(12, 1fr);
   overflow: hidden;
   box-shadow: 0 2px 7px 2px rgba(0, 0, 0, 0.2);
   margin-bottom: 10px;
+  height: 657px;
 }
 .hero-content {
-  padding: 51px 67px;
+  padding: 53px 56px;
   grid-column: span 4;
   background: #232323;
   color: #fff;
   position: relative;
   text-align: left;
-  min-width: 424px;
+  min-width: 496px;
 }
 .hero-content::after {
   content: "";
@@ -430,43 +445,48 @@ input[data-error]::after {
   position: absolute;
   right: -80px;
   top: 0;
+  display: none;
 }
 .hero-content > * {
   position: relative;
   z-index: 1;
 }
 .hero-headline {
-  font-size: 6rem;
-  font-weight: normal;
+  font-size: 94px;
+  font-weight: 500;
   white-space: nowrap;
 }
 .hero-text {
-  width: 146%;
   font-weight: normal;
-  margin-top: 57px;
+  margin: 73px 0;
   padding: 0;
+  font-size: 24px;
 }
 .btn-signup {
   outline: none;
   text-transform: capitalize;
-  font-size: 1.3rem;
-  padding: 15px 23px;
+  font-size: 25px;
+  padding: 13px 23px;
   margin: 0;
-  margin-top: 59px;
+  width: 199px;
 }
 .hero-img {
   grid-column: span 8;
-}
-.hero-img img {
+  justify-items: flex-end;
   width: 100%;
   height: 100%;
+}
+.hero-img img {
   display: block;
+  height: 100%;
+  width: 100%;
   padding: 0;
+  object-fit: cover;
 }
 .copyrights {
   color: #fe142f;
   padding: 0;
-  font-size: 1rem;
+  font-size: 15px;
   margin: 60px 0 30px;
   font-weight: bolder;
 }
@@ -474,9 +494,7 @@ input[data-error]::after {
   display: none;
 }
 footer {
-  padding-left: 2vw;
-  padding-right: 2vw;
-  margin: 0 20px;
+  margin: 0;
 }
 @media screen and (max-width: 800px) {
   .hero-section {
@@ -538,4 +556,15 @@ footer {
   font-size: 14px;
   margin-top: 5px;
   display: block;
+}
+
+span {
+  font-size: 18px;
+  margin-bottom: 0;
+}
+
+.confirmation-message p {
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }

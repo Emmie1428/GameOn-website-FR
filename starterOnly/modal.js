@@ -29,6 +29,25 @@ document.addEventListener('DOMContentLoaded', function () {
   })
 })
 
+//function for error messages
+function errorMessage(input, errorId, errorMessage, validEntry) {
+    input.style.borderColor = validEntry ? "" : "red";
+    let errorElement = document.getElementById(errorId);
+
+    if (!validEntry) {
+        if (!errorElement) {
+            errorElement = document.createElement("span");
+            errorElement.id = errorId;
+            errorElement.style.color = "red";
+            errorElement.style.fontSize = "10px";
+            input.parentNode.insertBefore(errorElement, input.nextSibling);
+        }
+        errorElement.textContent = errorMessage;
+    } else if (errorElement) {
+        errorElement.textContent = "";
+    }
+}
+
 //form's validation conditions
 const firstNameInput = document.getElementById("first");
 const lastNameInput = document.getElementById("last");
@@ -42,173 +61,80 @@ const conditionsInput = document.getElementById("checkbox1");
 function validationFirstName () {
   const firstName = firstNameInput.value;  
   let nameRegExp = new RegExp (".{2,}");
-  if (!nameRegExp. test(firstName)) {
-    firstNameInput.style.borderColor = "red"; 
-
-    let nameErrorMessage = document.getElementById("first-name-error");
-
-    if (!nameErrorMessage) {
-      nameErrorMessage = document.createElement("span");
-      nameErrorMessage.id = "first-name-error";
-      nameErrorMessage.style.color = "red";
-
-      firstNameInput.parentNode.insertBefore(
-        nameErrorMessage,
-      firstNameInput.nextSibling
+  const validEntry = nameRegExp.test(firstName);
+    
+    errorMessage(
+      firstNameInput,
+      "first-name-error",
+      "Veuillez entrer 2 caractères ou plus pour le champ du prénom.",
+      validEntry
     );
-    }
 
-    nameErrorMessage.textContent = "Veuillez entrer 2 caractères ou plus pour le champ du nom.";
-
-    return false;
-  } else {
-    firstNameInput.style.borderColor = "";
-
-    const nameErrorMessage = document.getElementById("first-name-error");
-    if (nameErrorMessage) {
-      nameErrorMessage.textContent = "";
-    }
-    return true;
-  }
+    return validEntry;
 }
 
 //last name validation
 function validationLastName () {
   const lastName = lastNameInput.value;  
   let nameRegExp = new RegExp (".{2,}");
-  if (!nameRegExp. test(lastName)) {
-    lastNameInput.style.borderColor = "red"; 
-
-    let nameErrorMessage = document.getElementById("last-name-error");
-
-    if (!nameErrorMessage) {
-      nameErrorMessage = document.createElement("span");
-      nameErrorMessage.id = "last-name-error";
-      nameErrorMessage.style.color = "red";
-
-      lastNameInput.parentNode.insertBefore(
-        nameErrorMessage,
-      lastNameInput.nextSibling
+  const validEntry = nameRegExp.test(lastName);
+    
+    errorMessage(
+      lastNameInput,
+      "last-name-error",
+      "Veuillez entrer 2 caractères ou plus pour le champ du nom.",
+      validEntry
     );
-    }
 
-    nameErrorMessage.textContent = "Veuillez entrer 2 caractères ou plus pour le champ du nom.";
-
-    return false;
-  } else {
-    lastNameInput.style.borderColor = "";
-
-    const nameErrorMessage = document.getElementById("last-name-error");
-    if (nameErrorMessage) {
-      nameErrorMessage.textContent = "";
-    }
-    return true;
-  }
+    return validEntry;
 }
 
 //email validation
 function validationEmail () {
   const email = emailInput.value;  
   let emailRegExp = new RegExp("^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$");
-
-  if (!emailRegExp. test(email)) {
-    emailInput.style.borderColor = "red"; 
-
-    let emailErrorMessage = document.getElementById("email-error");
-
-    if (!emailErrorMessage) {
-      emailErrorMessage = document.createElement("span");
-      emailErrorMessage.id = "email-error";
-      emailErrorMessage.style.color = "red";
-
-      emailInput.parentNode.insertBefore(
-        emailErrorMessage,
-      emailInput.nextSibling
+  const validEntry = emailRegExp.test(email);
+    
+    errorMessage(
+      emailInput,
+      "email-error",
+      "Vous devez entrer une adresse courriel valide.",
+      validEntry
     );
-    }
 
-    emailErrorMessage.textContent = "Vous devez entrer une adresse courriel valide.";
-
-    return false;
-  } else {
-    emailInput.style.borderColor = "";
-
-    const emailErrorMessage = document.getElementById("email-error");
-    if (emailErrorMessage) {
-      emailErrorMessage.textContent = "";
-    }
-    return true;
-  }
+    return validEntry;
 }
 
 //birthdate validation
 function validationBirthdate () {
   const birthdate = birthdateInput.value;  
   let birthdateRegExp = /^\d{4}-(0[1-9]|1[0-2])-(0[1-9]|[12]\d|3[01])$/;
+  const validEntry = birthdateRegExp.test(birthdate);
+    
+    errorMessage(
+      birthdateInput,
+      "birthdate-error",
+      "Vous devez entrer votre date de naissance.",
+      validEntry
+    );
 
-  if (!birthdateRegExp. test(birthdate)) {
-    birthdateInput.style.borderColor = "red"; 
-
-    let birthdateErrorMessage = document.getElementById("birthdate-error");
-
-    if (!birthdateErrorMessage) {
-      birthdateErrorMessage = document.createElement("span");
-      birthdateErrorMessage.id = "birthdate-error";
-      birthdateErrorMessage.style.color = "red";
-
-      birthdateInput.parentNode.insertBefore(
-        birthdateErrorMessage,
-        birthdateInput.nextSibling
-      );
-    }
-
-    birthdateErrorMessage.textContent = "Vous devez entrer votre date de naissance.";
-
-    return false;
-  } else {
-    birthdateInput.style.borderColor = "";
-
-    const birthdateErrorMessage = document.getElementById("birthdate-error");
-    if (birthdateErrorMessage) {
-      birthdateErrorMessage.textContent = "";
-    }
-    return true;
-  }
+    return validEntry;
 }
 
 //quantity of match validation
 function validationQuantity () {
   const quantity = quantityInput.value;  
   let quantityRegExp = new RegExp("^[0-9]+$");
+  const validEntry = quantityRegExp.test(quantity);
+    
+    errorMessage(
+      quantityInput,
+      "quantity-error",
+      "Vous devez indiquer le nombre de tournois.",
+      validEntry
+    );
 
-  if (!quantityRegExp. test(quantity)) {
-    quantityInput.style.borderColor = "red"; 
-
-    let quantityErrorMessage = document.getElementById("quantity-error");
-
-    if (!quantityErrorMessage) {
-      quantityErrorMessage = document.createElement("span");
-      quantityErrorMessage.id = "quantity-error";
-      quantityErrorMessage.style.color = "red";
-
-      quantityInput.parentNode.insertBefore(
-        quantityErrorMessage,
-      quantityInput.nextSibling
-      );
-    }
-
-    quantityErrorMessage.textContent = "Vous devez indiquer le nombre de tournois.";
-
-    return false;
-  } else {
-    quantityInput.style.borderColor = "";
-
-    const quantityErrorMessage = document.getElementById("quantity-error");
-    if (quantityErrorMessage) {
-      quantityErrorMessage.textContent = "";
-    }
-    return true;
-  }
+    return validEntry;
 }
 
 //location validation
@@ -223,24 +149,14 @@ function validationLocation() {
     }
   });
 
-  if (!selectedLocation) {
-    radioContainer.classList.add("radio-error");
-    
-    if (!locationErrorMessage) {
-      locationErrorMessage = document.createElement("span");
-      locationErrorMessage.id = "location-error";
-      radioContainer.appendChild(locationErrorMessage);
-    }
+  errorMessage(
+    radioContainer,
+    "location-error", 
+    "Veuillez choisir une option.",
+    selectedLocation 
+  );
 
-    locationErrorMessage.textContent = "Veuillez choisir une option.";
-    return false;
-  } else {
-    radioContainer.classList.remove('radio-error');
-    if (locationErrorMessage) {
-      locationErrorMessage.remove();
-    }
-    return true;
-  }
+  return selectedLocation;
 }
 
   // verification of every locations for the validation
@@ -262,6 +178,7 @@ function validationLocation() {
         conditionsErrorMessage.style.color = "red";
         conditionsErrorMessage.style.display = "block";
         conditionsErrorMessage.style.marginTop = "5px";
+        conditionsErrorMessage.style.fontSize = "10px";
 
         conditionsErrorMessage.textContent = "Vous devez vérifier que vous acceptez les termes et conditions.";
 
@@ -302,14 +219,27 @@ event.preventDefault();
 const valid = validationChecks.every(check => check === true);
 
    if (valid) {
-    const form = this;
-    form.innerHTML = "";
+    const modalBody = document.querySelector(".modal-body");
+    const originalForm = modalBody.innerHTML;
 
     //confirmation message
-    const confirmationMessage = document.createElement("div");
-    confirmationMessage.className = "confirmation-message";
-    confirmationMessage.innerHTML = `<p>Merci ! Votre réservation a été reçue.</p>`;
-    form.appendChild(confirmationMessage);
-  }
-});
+    modalBody.innerHTML = `
+        <div class="confirmation-message">
+            <p>Merci pour <br>votre inscription.</p>
+            <button class="close-reset-btn">Fermer</button>
+        </div>
+    `;
 
+    //button to close the confirmation modal
+    const closeResetButton = modalBody.querySelector('.close-reset-btn');
+    closeResetButton.addEventListener('click', () => {
+        modalBody.innerHTML = originalForm;
+        modalbg.style.display = "none";
+        
+        // Réinitialisation of the form
+        const form = document.querySelector("form");
+        if (form) {
+            form.reset();
+      }});   
+    };
+});
