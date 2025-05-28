@@ -60,7 +60,7 @@ const conditionsInput = document.getElementById("checkbox1");
 //first name validation
 function validationFirstName () {
   const firstName = firstNameInput.value;  
-  let nameRegExp = new RegExp (".{2,}");
+  let nameRegExp = new RegExp ("\w{2,}");
   const validEntry = nameRegExp.test(firstName);
     
     errorMessage(
@@ -76,7 +76,7 @@ function validationFirstName () {
 //last name validation
 function validationLastName () {
   const lastName = lastNameInput.value;  
-  let nameRegExp = new RegExp (".{2,}");
+  let nameRegExp = new RegExp ("\w{2,}");
   const validEntry = nameRegExp.test(lastName);
     
     errorMessage(
